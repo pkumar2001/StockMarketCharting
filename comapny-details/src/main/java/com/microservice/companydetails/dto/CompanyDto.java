@@ -1,5 +1,7 @@
 package com.microservice.companydetails.dto;
 
+import java.util.List;
+
 public class CompanyDto {
 
 	private int id;
@@ -8,20 +10,24 @@ public class CompanyDto {
 	
 	private int turnOver;
 	
-	private int sectorid;
+	private int sectorId;
 	
 	private String description;
 
+	private List<String> stockExchangeNames;
+	
 	public CompanyDto() {
 	}
 
-	public CompanyDto(int id, String companyName, int turnOver, int sectorid, String description) {
+	public CompanyDto(int id, String companyName, int turnOver, int sectorId, String description,
+			List<String> stockExchangeNames) {
 		super();
 		this.id = id;
 		this.companyName = companyName;
 		this.turnOver = turnOver;
-		this.sectorid = sectorid;
+		this.sectorId = sectorId;
 		this.description = description;
+		this.stockExchangeNames = stockExchangeNames;
 	}
 
 	public int getId() {
@@ -48,12 +54,12 @@ public class CompanyDto {
 		this.turnOver = turnOver;
 	}
 
-	public int getSectorid() {
-		return sectorid;
+	public int getSectorId() {
+		return sectorId;
 	}
 
-	public void setSectorid(int sectorid) {
-		this.sectorid = sectorid;
+	public void setSectorId(int sectorId) {
+		this.sectorId = sectorId;
 	}
 
 	public String getDescription() {
@@ -63,6 +69,15 @@ public class CompanyDto {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public List<String> getStockExchangeNames() {
+		return stockExchangeNames;
+	}
+
+	public void setStockExchangeNames(List<String> stockExchangeNames) {
+		this.stockExchangeNames = stockExchangeNames;
+	}
+
 	
 	
 }

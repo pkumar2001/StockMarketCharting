@@ -32,8 +32,9 @@ public class CompanyController {
 	@Autowired
 	private StockPriceService stockPriceService;
 	
+	
 	@PostMapping("/addCompany")
-	public ResponseEntity<CompanyDto> createCompany(@RequestBody Company company) throws Exception {
+	public ResponseEntity<CompanyDto> createCompany(@RequestBody CompanyDto company) throws Exception {
 		String companyName = company.getCompanyName();
 		CompanyDto companyObj = companyService.findCompanyByName(companyName);
 		if(companyObj!=null) {

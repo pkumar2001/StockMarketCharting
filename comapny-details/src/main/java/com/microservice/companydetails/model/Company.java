@@ -85,6 +85,12 @@ public class Company {
 	public void addStockExchangeList(StockExchange stockExchange) {
 		this.stockExchangeList.add(stockExchange);
 	}
+	
+	
+
+	public void setStockExchangeList(List<StockExchange> stockExchangeList) {
+		this.stockExchangeList = stockExchangeList;
+	}
 
 	public List<IpoDetails> getIpoList() {
 		return ipoList;

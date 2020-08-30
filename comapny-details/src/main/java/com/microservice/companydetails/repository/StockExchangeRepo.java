@@ -8,4 +8,5 @@ import com.microservice.companydetails.model.StockExchange;
 @Repository
 public interface StockExchangeRepo extends JpaRepository<StockExchange, Integer>{
 
+	public StockExchange findByStockExchangeName(String name);
 }

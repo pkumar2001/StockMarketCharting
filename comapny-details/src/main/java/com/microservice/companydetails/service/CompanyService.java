@@ -1,19 +1,25 @@
 package com.microservice.companydetails.service;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.microservice.companydetails.ComapnyDetailsApplication;
 import com.microservice.companydetails.dto.CompanyDto;
 import com.microservice.companydetails.dto.IpoDto;
 import com.microservice.companydetails.helper.Helper;
 import com.microservice.companydetails.model.Company;
 import com.microservice.companydetails.model.IpoDetails;
+import com.microservice.companydetails.model.StockExchange;
 import com.microservice.companydetails.repository.CompanyRepo;
+import com.microservice.companydetails.repository.StockExchangeRepo;
+import com.microservice.companydetails.repository.StockPriceRepo;
 
 @Service
 public class CompanyService {
@@ -22,12 +28,30 @@ public class CompanyService {
 	private CompanyRepo companyRepo;
 	
 	@Autowired
+	private StockExchangeRepo stockExchangeRepo;
+	
+	@Autowired
 	private ModelMapper modelMapper;
 
-	
-	public CompanyDto addCompany(Company company) {
-		Company obj = companyRepo.save(company);
-		return modelMapper.map(obj, CompanyDto.class);
+	@Transactional
+	public CompanyDto addCompany(CompanyDto companyDto) throws Exception {
+		Company company = modelMapper.map(companyDto, Company.class);
+		List<String> stockExchangeNamesList = companyDto.getStockExchangeNames();
+		if(stockExchangeNamesList!=null) {
+			for( String str : stockExchangeNamesList) {
+				StockExchange obj = stockExchangeRepo.findByStockExchangeName(str);
+				if(obj==null) {
+					throw new Exception("Stock Exchange with name "+ str+ " not exist!!!");
+				}
+				else {
+					company.addStockExchangeList(obj);
+				}
+			}
+		}
+		;
+		CompanyDto dto = modelMapper.map(companyRepo.save(company), CompanyDto.class);
+		dto.setStockExchangeNames(companyDto.getStockExchangeNames());
+		return dto;
 	}
 	
 	public CompanyDto findCompanyByName(String companyName) {
@@ -44,7 +68,10 @@ public class CompanyService {
 		return modelMapper.map(obj, CompanyDto.class);
 	}
 	
+	@Transactional
 	public void deleteCompanyById(int companyId) {
+		Company obj = companyRepo.findById(companyId).get();
+		obj.setStockExchangeList(null);
 		companyRepo.deleteById(companyId);
 	}
 	
