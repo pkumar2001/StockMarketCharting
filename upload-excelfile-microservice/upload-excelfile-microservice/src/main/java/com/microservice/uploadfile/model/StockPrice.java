@@ -2,8 +2,8 @@ package com.microservice.uploadfile.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,21 +16,21 @@ public class StockPrice {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
+	@Column(name = "company_id")
 	private int companyId;
+	
+	@Column(name = "stock_exchange")
 	private String stockExchange;
+	
+	@Column(name = "current_price")
 	private int currentPrice;
+	
+	@Column(name = "date")
 	private LocalDate date;
+	
+	@Column(name = "time")
 	private LocalTime time;
 	
-	public StockPrice(int id, int companyId, String stockExchange, int currentPrice, LocalDate date, LocalTime time) {
-		super();
-		this.id = id;
-		this.companyId = companyId;
-		this.stockExchange = stockExchange;
-		this.currentPrice = currentPrice;
-		this.date = date;
-		this.time = time;
-	}
 
 	public StockPrice() {
 
