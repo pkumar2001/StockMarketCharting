@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.microservice.authentication.model.Test;
@@ -18,6 +19,11 @@ public class AuthController {
 	@Autowired
 	private RegistrationService service;
 
+	@GetMapping("/test")
+	public String test() {
+		return "Test";
+	}
+	
 	@PostMapping("/registeruser")
 	public User registerUser(@RequestBody User user) throws Exception {
 
@@ -49,9 +55,4 @@ public class AuthController {
 		return userObj;
 	}
 
-	@GetMapping(path = "/test")
-	public Test validateLogin() {
-		Test test = new Test("successfull");
-		return test;
-	}
 }
